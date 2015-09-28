@@ -1,5 +1,5 @@
 <?php
-    //loome AB ühenduse
+    //loome AB Ã¼henduse
     /*  
         // config_global.php
         $servername = "";
@@ -8,16 +8,16 @@
     
     */
     require_once("../config_global.php");
-    $database = "if15_romil_1";
+    $database = "if15_anniant";
     
-    //paneme sessiooni serveris tööle, saaame kasutada SESSION[]
+    //paneme sessiooni serveris tÃ¶Ã¶le, saaame kasutada SESSION[]
     session_start();
     
     
     function logInUser($email, $hash){
         
-        // GLOBALS saab kätte kõik muutujad mis kasutusel
-        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        // GLOBALS saab kÃ¤tte kÃµik muutujad mis kasutusel
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
         
         $stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
         $stmt->bind_param("ss", $email, $hash);
@@ -45,13 +45,21 @@
     
     function createUser($create_email, $hash){
         
-        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
-        $stmt->bind_param("ss", $create_email, $hash);
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
+        $stmt = $mysqli->prepare("INSERT INTO car_plate (car_plate, color) VALUES (?,?)");
+        $stmt->bind_param("ss", $car_plate, $color);
         $stmt->execute();
         $stmt->close();
         
         $mysqli->close();
         
     }
+	
+	function createCarPlate($car_plate, $color){
+		
+
+		
+		
+	}
+	
  ?>
