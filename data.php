@@ -21,14 +21,35 @@
 	$car_plate_error = $color_error = "";
 	echo $_SESSION ['logged_in_user_id'];
 	
-
-	
+	// valideeri
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		if(isset($_POST["add_car_plate"])){
+			$car_plate_error = "Auto nr on kohustuslik";
+		}else{
+			$car_plate = cleanInput($_POST["car_plate"]);
+		}
+		if(isset($_POST["color"])){
+			$color_error = "Värv on kohustuslik";
+		}else{
+			$color = cleanInput($_POST["color"]);
+		}		
+		
+		if($car_plate_error == "" && $color_error == ""){
+			createCarPlate($car_plate, color);
+		}
+	}
+		
+	function cleanInput($data) {
+  	$data = trim($data);
+  	$data = stripslashes($data);
+  	$data = htmlspecialchars($data);
+  	return $data;
+  }
 ?>
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a>
 
 <h2> Lisa uus </h2>
-
 <form>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   <label for="car_plate"> Auto numbrimärk </label>
@@ -36,6 +57,7 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
   <label for="color"> Auto värv </label>
   	<input id="color" type="text" value="<?=$color; ?>"> <?=$color_error; ?><br><br>
   	<input type="submit" name="add_car_plate" value="Lisa">
+	<p style="color:green;"><?=$m;?></p>
   </form>
 
 

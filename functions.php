@@ -3,8 +3,8 @@
     /*  
         // config_global.php
         $servername = "";
-        $server_username = "";
-        $server_password = "";
+        $serverusername = "";
+        $serverpassword = "";
     
     */
     require_once("../config_global.php");
@@ -46,8 +46,8 @@
     function createUser($create_email, $hash){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO car_plate (car_plate, color) VALUES (?,?)");
-        $stmt->bind_param("ss", $car_plate, $color);
+        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
+        $stmt->bind_param("ss", $create_email, $hash);
         $stmt->execute();
         $stmt->close();
         
@@ -55,11 +55,20 @@
         
     }
 	
-	function createCarPlate($car_plate, $color){
+	function createCarPlate($plate, $car_color){
 		
-
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBAL["database"]);
+		$stmt = $mysqli->prepare("INSERT INTO car_plates (user_id, number_plate, color) VALUES (?,?,?)");
+		$stmt->bind_param("iss", $SESSION['logged_in_user_id'], $plate, $car_color);
 		
+		if ($stmt->execute()){
+			$message="edukalt andmebaasi salvestatus"	
+		}
 		
+		$stmt->close();
+		$mysqli->close();
+		
+		return $message;
 	}
 	
  ?>
