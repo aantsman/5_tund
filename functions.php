@@ -62,13 +62,20 @@
 		$stmt->bind_param("iss", $SESSION['logged_in_user_id'], $plate, $car_color);
 		
 		if ($stmt->execute()){
-			$message="edukalt andmebaasi salvestatus"	
+			$message="edukalt andmebaasi salvestatus";
 		}
 		
 		$stmt->close();
 		$mysqli->close();
 		
 		return $message;
+	}
+	
+	function getAllData(){
+		
+	$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBAL["database"]);
+	$stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates");
+	
 	}
 	
  ?>
